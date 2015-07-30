@@ -10,8 +10,6 @@ namespace YouTubeConnector.Models
     {
         #region Public Properties
 
-        public string Size { get; set; }
-
         public string Url { get; set; }
 
         #endregion

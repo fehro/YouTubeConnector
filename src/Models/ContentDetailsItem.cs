@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace YouTubeConnector.Models
 {
-    public class SearchResult
+    public class ContentDetailsItem
     {
         #region Public Properties
 
-        public PageInfo PageInfo { get; set; }
+        public string Id { get; set; }
 
-        public List<Item> Items { get; set; }
+        public ContentDetails ContentDetails { get; set; }
 
         #endregion
     }

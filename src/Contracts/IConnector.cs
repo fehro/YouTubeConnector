@@ -9,6 +9,6 @@ namespace YouTubeConnector.Contracts
 {
     public interface IConnector
     {
-        IEnumerable<SearchResult> Search(string searchQuery);
+        IEnumerable<Item> Search(string searchQuery, out int totalResults);
     }
 }
