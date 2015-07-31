@@ -8,6 +8,7 @@ using YouTubeConnector.Models;
 using System.Web;
 using System.Net.Http;
 using System.Web.Script.Serialization;
+using System.Web.UI.WebControls.Expressions;
 
 namespace YouTubeConnector
 {
@@ -36,10 +37,13 @@ namespace YouTubeConnector
 
         /// <summary>
         /// Search YouTube with the provided values.
+        /// A search where includeContentDetails is false will cost 100 points.
+        /// A search where includeContentDetails is true will cost 103 points.
         /// </summary>
-        /// <param name="searchQuery">The search query string</param>
-        /// <param name="totalResults">The total available results</param>
-        public IEnumerable<Item> Search(string searchQuery, out int totalResults)
+        /// <param name="searchQuery">The search query string.</param>
+        /// <param name="includeContentDetails">Inlude the content details.</param>
+        /// <param name="totalResults">The total available results.</param>
+        public IEnumerable<Item> Search(string searchQuery, bool includeContentDetails, out int totalResults)
         {
             //Build the search url.
             var url = BuildSearchUrl(searchQuery);
@@ -51,7 +55,10 @@ namespace YouTubeConnector
             var searchResult = DeserializeJson<SearchResult>(response);
 
             //Get the content details.
-            searchResult = GetContentDetails(searchResult);
+            if (includeContentDetails)
+            {
+                searchResult = GetContentDetails(searchResult);
+            }
 
             //Set the total results.
             totalResults = searchResult.PageInfo.TotalResults;
@@ -65,7 +72,7 @@ namespace YouTubeConnector
         #region Protected Properties
 
         /// <summary>
-        /// Deserialize the JSON data to a search result object.
+        /// Deserialize the JSON data to an object.
         /// </summary>
         protected T DeserializeJson<T>(string json)
         {
